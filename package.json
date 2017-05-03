@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "koc-common-return",
   "main": "index.js",
-//  "repository": {
-//    "type": "git",
-//    "url": "git@123.57.32.169:koc-common/koc-common-mysql.git"
-//  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:cq-guojia/koc-common-return.git"
+  },
   "author": "",
   "license": "ISC"
 }
