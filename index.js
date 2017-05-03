@@ -1,9 +1,5 @@
 "use strict";
 
-module.exports = (parm) => {
-  return new ReturnValue(parm);
-};
-
 function ReturnValue(parm) {
   this.hasError = parm && parm.hasError ? parm.hasError : false;
   this.errorCode = parm && parm.errorCode ? parm.errorCode : '';
@@ -27,3 +23,22 @@ function ReturnValue(parm) {
     this.mapData = null;
   };
 }
+
+const KOCReturn = {
+  Value: (parm) => {
+    return new ReturnValue(parm);
+  },
+  Promise: async (func) => {
+    let retValue = KOCReturn.Value();
+    try {
+      retValue.returnObject = await func();
+    } catch (ex) {
+      console.error(ex);
+      retValue.hasError = true;
+      retValue.message = ex.message;
+    }
+    return retValue;
+  }
+};
+
+module.exports = KOCReturn;
