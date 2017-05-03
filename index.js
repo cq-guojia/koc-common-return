@@ -16,6 +16,7 @@ function ReturnValue(parm) {
       this.mapData[key] = val;
     }
   };
+
   this.GetValue = function (key) {
     return (key in this.mapData) ? this.mapData[key] : null;
   };
