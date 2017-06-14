@@ -13,7 +13,7 @@ function ReturnValue(parm) {
     }
   };
   this.GetValue = function (key) {
-    return (key in this.mapData) ? this.mapData[key] : null;
+    return (this.mapData && (key in this.mapData)) ? this.mapData[key] : null;
   };
   this.Reset = function () {
     this.hasError = false;
