@@ -24,12 +24,14 @@ function ReturnValue(parm) {
   };
 }
 
-const KOCReturn = {
-  Value: (parm) => {
+/* C */
+var KOCReturn = {
+  Value: function (parm) {
     return new ReturnValue(parm);
   },
-  Promise: async (func) => {
-    let retValue = KOCReturn.Value();
+  Promise: async function (func) {
+    /* L */
+    var retValue = KOCReturn.Value();
     try {
       retValue.returnObject = await func();
     } catch (ex) {
