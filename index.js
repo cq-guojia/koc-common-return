@@ -42,5 +42,3 @@ var KOCReturn = {
     return retValue;
   }
 };
-
-module.exports = KOCReturn;
