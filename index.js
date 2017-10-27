@@ -1,5 +1,33 @@
 "use strict";
 
+function _asyncToGenerator(fn) {
+  return function () {
+    var gen = fn.apply(this, arguments);
+    return new Promise(function (resolve, reject) {
+      function step(key, arg) {
+        try {
+          var info = gen[key](arg);
+          var value = info.value;
+        } catch (error) {
+          reject(error);
+          return;
+        }
+        if (info.done) {
+          resolve(value);
+        } else {
+          return Promise.resolve(value).then(function (value) {
+            step("next", value);
+          }, function (err) {
+            step("throw", err);
+          });
+        }
+      }
+
+      return step("next");
+    });
+  };
+}
+
 function ReturnValue(parm) {
   this.hasError = parm && parm.hasError ? parm.hasError : false;
   this.errorCode = parm && parm.errorCode ? parm.errorCode : '';
@@ -13,7 +41,7 @@ function ReturnValue(parm) {
     }
   };
   this.GetValue = function (key) {
-    return (this.mapData && (key in this.mapData)) ? this.mapData[key] : null;
+    return this.mapData && key in this.mapData ? this.mapData[key] : null;
   };
   this.Reset = function () {
     this.hasError = false;
@@ -29,18 +57,24 @@ var KOCReturn = {
   Value: function (parm) {
     return new ReturnValue(parm);
   },
-  Promise: async function (func) {
-    /* L */
-    var retValue = KOCReturn.Value();
-    try {
-      retValue.returnObject = await func();
-    } catch (ex) {
-      console.error(ex);
-      retValue.hasError = true;
-      retValue.message = ex.message;
-    }
-    return retValue;
-  }
+  Promise: (function () {
+    var _ref = _asyncToGenerator(function* (func) {
+      /* L */
+      var retValue = KOCReturn.Value();
+      try {
+        retValue.returnObject = yield func();
+      } catch (ex) {
+        console.error(ex);
+        retValue.hasError = true;
+        retValue.message = ex.message;
+      }
+      return retValue;
+    });
+
+    return function Promise(_x) {
+      return _ref.apply(this, arguments);
+    };
+  })()
 };
 
 module.exports = KOCReturn;
