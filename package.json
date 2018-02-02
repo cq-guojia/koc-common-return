@@ -1,12 +1,26 @@
 {
   "name": "koc-common-return",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "koc-common-return",
-  "main": "index.js",
+  "scripts": {
+    "compile": "babel index.js -d dist",
+    "prepublish": "npm run compile"
+  },
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:cq-guojia/koc-common-return.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0"
+  }
 }
