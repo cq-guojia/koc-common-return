@@ -25,10 +25,10 @@ function ReturnValue(parm) {
 }
 
 const KOCReturn = {
-  Value: (parm) => {
+  Value: function(parm) {
     return new ReturnValue(parm);
   },
-  Promise: async (func) => {
+  Promise: async function(func) {
     let retValue = KOCReturn.Value();
     try {
       retValue.returnObject = await func();
