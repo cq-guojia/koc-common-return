@@ -1,6 +1,6 @@
 {
   "name": "koc-common-return",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "koc-common-return",
   "scripts": {
     "compile": "babel index.js -d dist",

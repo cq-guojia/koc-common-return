@@ -36,6 +36,7 @@ const KOCReturn = {
       console.error(ex);
       retValue.hasError = true;
       retValue.message = ex.message;
+      retValue.returnObject = ex;
     }
     return retValue;
   },
