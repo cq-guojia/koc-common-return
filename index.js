@@ -1,45 +1,54 @@
-'use strict';
+'use strict'
 
-function ReturnValue(parm) {
-  this.hasError = parm && parm.hasError ? parm.hasError : false;
-  this.errorCode = parm && parm.errorCode ? parm.errorCode : '';
-  this.message = parm && parm.message ? parm.message : '';
-  this.returnObject = parm && parm.returnObject ? parm.returnObject : null;
-  this.mapData = null;
-  this.PutValue = function(key, val) {
-    if (this.mapData == undefined) {
-      this.mapData = new Object();
-      this.mapData[key] = val;
+class KOCReturn {
+  hasError = false
+  errorCode = ''
+  message = ''
+  returnObject = null
+  mapData = null
+
+  constructor (parm) {
+    parm && parm.hasError && (this.hasError = parm.hasError)
+    parm && parm.errorCode && (this.errorCode = parm.errorCode)
+    parm && parm.message && (this.message = parm.message)
+    parm && parm.returnObject && (this.returnObject = parm.returnObject)
+  }
+
+  PutValue (key, val) {
+    if (!this.mapData) {
+      this.mapData = {}
     }
-  };
-  this.GetValue = function(key) {
-    return (this.mapData && (key in this.mapData)) ? this.mapData[key] : null;
-  };
-  this.Reset = function() {
-    this.hasError = false;
-    this.errorCode = '';
-    this.message = '';
-    this.returnObject = null;
-    this.mapData = null;
-  };
+    this.mapData[key] = val
+  }
+
+  GetValue (key) {
+    return (this.mapData && (key in this.mapData)) ? this.mapData[key] : null
+  }
+
+  Reset () {
+    this.hasError = false
+    this.errorCode = ''
+    this.message = ''
+    this.returnObject = null
+    this.mapData = null
+  }
+
+  static Value (parm) {
+    return new KOCReturn(parm)
+  }
+
+  static async Promise (func) {
+    let retValue = new KOCReturn()
+    try {
+      retValue.returnObject = await func()
+    } catch (ex) {
+      console.error(ex)
+      retValue.hasError = true
+      retValue.message = ex.message
+      retValue.returnObject = ex
+    }
+    return retValue
+  }
 }
 
-const KOCReturn = {
-  Value: function(parm) {
-    return new ReturnValue(parm);
-  },
-  Promise: async function(func) {
-    let retValue = KOCReturn.Value();
-    try {
-      retValue.returnObject = await func();
-    } catch (ex) {
-      console.error(ex);
-      retValue.hasError = true;
-      retValue.message = ex.message;
-      retValue.returnObject = ex;
-    }
-    return retValue;
-  },
-};
-
-module.exports = KOCReturn;
+module.exports = KOCReturn
