@@ -42,7 +42,6 @@ class KOCReturn {
     try {
       retValue.returnObject = await func()
     } catch (ex) {
-      console.error(ex)
       retValue.hasError = true
       retValue.message = ex.message
       retValue.returnObject = ex
